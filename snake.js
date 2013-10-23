@@ -120,5 +120,3 @@
   }
 
 })(this);
-
-//module.exports = this.Snakes;
