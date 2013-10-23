@@ -113,13 +113,6 @@
 
   View.prototype.step = function() {
 
-    this.apple_counter += 1;
-
-    if (this.apple_counter === 5){
-      this.board.generate_apple();
-      this.apple_counter = 0;
-    }
-
     // advance the snake
     if (this.board.snake.dead) {
       clearInterval(this.intervalID);
