@@ -1,5 +1,3 @@
-//this.Snakes = require('./snake.js');
-
 (function(root) {
 
   var Snakes = root.Snakes = (root.Snakes || {});
