@@ -46,6 +46,8 @@
     // Add the newly calculated segment to the front of the snake
     var newCoord = new Coord(newX, newY);
     this.segments.unshift(newCoord);
+
+    this.lastDir = this.dir;
   }
 
   // Determines the new position of the snake's head after it moves.
@@ -103,7 +105,18 @@
   }
 
   Snake.prototype.turn = function(newDir) {
-    this.dir = newDir;
+    // true if the user is attempting to turn in the direction opposite their
+    // last move.
+    var aboutFace = (this.lastDir === "N" && newDir === "S") ||
+                    (this.lastDir === "S" && newDir === "N") ||
+                    (this.lastDir === "E" && newDir === "W") ||
+                    (this.lastDir === "W" && newDir === "E")
+
+    if (aboutFace) {
+      return;
+    } else {
+      this.dir = newDir;
+    }
   }
 
 })(this);
