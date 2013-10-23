@@ -102,12 +102,11 @@
 
   View.prototype.step = function() {
 
-    // advance the snake
+    // advance the snake. stop the game if the snake is dead.
     if (this.board.snake.dead) {
       clearInterval(this.intervalID);
       return;
     }
-    // this.board.snake.move();
     this.board.update();
 
     this.clearBoard();
