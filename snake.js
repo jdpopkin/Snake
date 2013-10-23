@@ -86,7 +86,7 @@
     for (var i = 0; i < this.segments.length; i++) {
       if (this.segments[i].x === newX && this.segments[i].y === newY) {
         this.dead = true;
-        alert("Game over!\nYour score: " + this.score);
+        alert("Game over!\nYour score: " + this.score + "\nPress R to play again!");
         return true;
       }
     }
