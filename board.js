@@ -42,10 +42,14 @@
   // Generates an apple and places it on the board.
   Board.prototype.generate_apple = function(){
     this.apple_counter = 0;
+    if (this.apple_array.length > 2) {
+      return;
+    }
 
     var appleX = Math.floor(Math.random() * this.size);
     var appleY = Math.floor(Math.random() * this.size);
-    this.apple_array.push([appleX, appleY]);
+    var appleCoord = new Coord(appleX, appleY);
+    this.apple_array.push(appleCoord);
 
   }
 

@@ -62,40 +62,29 @@
 
 
 
-
-
-  View.prototype.drawSnake = function() {
-    var segments = this.board.snake.segments;
-
-    for (var i = 0; i < this.board.snake.segments.length; i++) {
-      var thisX = segments[i].x;
-      var thisY = segments[i].y;
+  View.prototype.drawCoords = function(coordsArray, cssClass) {
+    for (var i = 0; i < coordsArray.length; i++) {
+      var thisX = coordsArray[i].x;
+      var thisY = coordsArray[i].y;
 
       // find corresponding div
       var row =  $('.row').get(thisY);
       var square = $(row).children().get(thisX);
 
-      // set it to snake class
-      $(square).addClass("snake");
-      $(square).removeClass("empty");
+      // set it to desired class unless it has snake class
+      if (!$(square).hasClass("snake")) {
+        $(square).addClass(cssClass);
+        $(square).removeClass("empty");
+      }
     }
   }
 
+  View.prototype.drawSnake = function() {
+    this.drawCoords(this.board.snake.segments, "snake");
+  }
+
   View.prototype.drawApples = function() {
-    var apples = this.board.apple_array;
-
-    for (var i = 0; i < apples.length; i++) {
-      var thisX = apples[i][0];
-      var thisY = apples[i][1];
-
-      // find corresponding div
-      var row =  $('.row').get(thisY);
-      var square = $(row).children().get(thisX);
-
-      // set it to snake class
-      $(square).addClass("apple");
-      $(square).removeClass("empty");
-    }
+    this.drawCoords(this.board.apple_array, "apple");
   }
 
   View.prototype.clearBoard = function() {

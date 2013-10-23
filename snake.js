@@ -31,18 +31,21 @@
     newX = (newX + this.boardSize) % this.boardSize;
     newY = (newY + this.boardSize) % this.boardSize;
 
-    this._collisionCheck(newX, newY);
-
     this._appleCheck(newX, newY);
-
-    // Add the newly calculated segment to the front of the snake
-    var newCoord = new Coord(newX, newY);
-    this.segments.unshift(newCoord);
 
     if (!this.grow) {
       this.segments.pop();
     }
+
     this.grow = false;
+
+    // Save this for last because collision with the tail can be avoided if the
+    // tail moves out of the way (that is, if we aren't growing)
+    this._collisionCheck(newX, newY);
+
+    // Add the newly calculated segment to the front of the snake
+    var newCoord = new Coord(newX, newY);
+    this.segments.unshift(newCoord);
   }
 
   // Determines the new position of the snake's head after it moves.
@@ -91,7 +94,7 @@
   // Check for collision with each of the apples in the apple array
   Snake.prototype._appleCheck = function(newX, newY) {
     for (var i = 0; i < this.apple_array.length; i++) {
-      if (this.apple_array[i][0] === newX && this.apple_array[i][1] === newY) {
+      if (this.apple_array[i].x === newX && this.apple_array[i].y === newY) {
         this.grow = true;
         this.score += 10;
         this.apple_array.splice(i, 1);
