@@ -8,6 +8,12 @@
     this.apple_counter = 0;
   };
 
+  View.prototype.restart = function() {
+    this.board = new Snakes.Board();
+    clearInterval(this.intervalID);
+    this.intervalID = setInterval(this.step.bind(this), 500)
+  }
+
   View.prototype.start = function() {
     this.board = new Snakes.Board();
 
@@ -31,12 +37,10 @@
 
     var that = this;
     $(document).on("keydown", function(event) {
-      //console.log(event.keyCode);
+      var keyPressed = aliasKeys(event.keyCode);
 
-
-      // 87 = w, 65 = a, 68 = d, 83 = s
-
-      switch(event.keyCode) {
+      // 87 = w, 65 = a, 68 = d, 83 = s, 82 = r
+      switch(keyPressed) {
         case 87:
           that.board.snake.turn("N");
           break;
@@ -49,6 +53,11 @@
         case 83:
           that.board.snake.turn("S");
           break;
+        case 82:
+          if (that.board.snake.dead) {
+            that.restart();
+          }
+          break;
         default:
         break;
       }
@@ -56,8 +65,28 @@
 
     this.intervalID = setInterval(this.step.bind(this), 500)
 
+  }
 
-
+  // Alias arrow keys to WASD. 38 = up, 37 = left, 39 = right, 40 = down
+  var aliasKeys = function(keyCode) {
+    switch(keyCode) {
+    case 38:
+      var keyPressed = 87;
+      break;
+    case 37:
+      var keyPressed = 65;
+      break;
+    case 39:
+      var keyPressed = 68;
+      break;
+    case 40:
+      var keyPressed = 83
+      break;
+    default:
+      var keyPressed = keyCode;
+      break;
+    }
+    return keyPressed;
   }
 
 
